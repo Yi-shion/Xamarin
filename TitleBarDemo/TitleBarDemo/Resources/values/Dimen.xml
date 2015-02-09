@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <!--====================共用====================-->
+  <!--18px轉換後-->
+  <dimen name="font18px">10.8dp</dimen>
+
+  <!--20px轉換後-->
+  <dimen name="font20px">12dp</dimen>
+
+  <!--22px轉換後-->
+  <dimen name="font22px">13.2dp</dimen>
+
+  <!--24px轉換後-->
+  <dimen name="font24px">14.4dp</dimen>
+
+  <!--28px轉換後-->
+  <dimen name="font28px">16.8dp</dimen>
+
+  <!--30px轉換後-->
+  <dimen name="font30px">18dp</dimen>
+
+  <!--32px轉換後-->
+  <dimen name="font32px">19.2dp</dimen>
+
+  <!--34px轉換後-->
+  <dimen name="font34px">20.4dp</dimen>
+
+  <!--36px轉換後-->
+  <dimen name="font36px">21.6dp</dimen>
+
+  <!--表单寬度-->
+  <dimen name="formWidth">322.3dip</dimen>
+
+  <!--表单单行高度-->
+  <dimen name="formHeight">44.3dip</dimen>
+
+  <!--身分驗證寬高-->
+  <dimen name="authFormWidth">319dip</dimen>
+  <dimen name="authFormHeight">45.6dp</dimen>
+
+  <!--====================登入====================-->
+  <!--登入框按鈕PaddingLeft-->
+  <dimen name="loginPaddingLeft">14.85dip</dimen>
+  <!--登入框按鈕PaddingRight-->
+  <dimen name="loginDeleteIconPaddingR">57.2dip</dimen>
+  <!--登入框文字Size-->
+  <dimen name="loginTextSize">@dimen/font28px</dimen>
+  <!--login刪除和下拉icon-->
+  <dimen name="loginDelAndDrownDownIcon">41.8dip</dimen>
+  <!--login checkbox的文字间格-->
+  <dimen name="loginCheckBoxPadding">30.8dip</dimen>
+
+  <!--====================會員中心====================-->
+  <!--表單寬度-->
+  <dimen name="memFormWidth">316.8dip</dimen>
+  <!--表單高度-->
+  <dimen name="memFormHigth">44.4dip</dimen>
+  <!--表單間距-->
+  <dimen name="memFormPadding">11dip</dimen>
+  <!--表單内容左边間距-->
+  <dimen name="memFormContentPaddingL">18.7dip</dimen>
+  <!--表單右邊箭頭的padding-->
+  <dimen name="memIconMoreR">14.3dip</dimen>
+
+  <!--====================充值====================-->
+  <!--表單高度（金额跟类别）-->
+  <dimen name="rechageFormHeight">57.6dip</dimen>
+  <!--表單间隔-->
+  <dimen name="rechageFormPadding">11dip</dimen>
+
+  <!--====================投注====================-->
+  <!--表单宽度-->
+  <dimen name="betHpoMatchWidth">312.4dip</dimen>
+
+  <!--====================订单详情====================-->
+  <!--表单宽度-->
+  <dimen name="orderWidth">301.4dip</dimen>
+  <dimen name="orderTopHeight">75.9dp</dimen>
+  <dimen name="orderLineSpace">11dip</dimen>
+  <dimen name="orderMatchWidth">299.2dip</dimen>
+  <dimen name="orderMatchHeight">33dip</dimen>
+  <dimen name="orderMatchLeftPadding">23.1dip</dimen>
+  <dimen name="ticketTitleHeight">27.5dip</dimen>
+  <!--====================筛选====================-->
+  <!--radio间隔-->
+  <dimen name="radioPadding">25dip</dimen>
+
+</resources>
