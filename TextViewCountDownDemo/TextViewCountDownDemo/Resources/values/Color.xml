@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <!--系统背景-->
+  <color name="AppBackground">#EEEEEE</color>
+
+  <!--标题颜色-->
+  <color name="TitleBarColor">#C10F0F</color>
+
+  <!--提示顏色-->
+  <color name="HintColor">#989da9</color>
+
+  <!--邊框顏色-->
+  <color name="BorderColor">#bdc5d1</color>
+
+  <!--格線顏色-->
+  <color name="FormLineColor">#dee2e8</color>
+
+  <!--身分驗證格線顏色-->
+  <color name="AutFormLineColor">#dfe3e9</color>
+
+  <!--表單Header文字顏色-->
+  <color name="FormHeaderTextColor">#989fa9</color>
+
+  <!--粉色按鈕-->
+  <color name="ButtonPink">#f45d5d</color>
+
+  <!--粉色按鈕_按下-->
+  <color name="ButtonPink_pressed">#e43c3c</color>
+
+  <!--投注粉色按鈕-->
+  <color name="ButtonBetPink_Select">#f67c7c</color>
+
+  <!--灰色按鈕-->
+  <color name="ButtonGray">#b7bbc2</color>
+
+  <!--灰色按鈕_按下-->
+  <color name="ButtonGray_pressed">#a4a8af</color>
+
+  <!--提示匡border1-->
+  <color name="MsgBorder1">#b0afb7</color>
+
+  <!--提示匡border2-->
+  <color name="MsgBorder2">#fbfbfb</color>
+
+  <!--提示匡titleColor-->
+  <color name="MsgTitleTextColor">#333333</color>
+
+  <!--提示匡内容Color-->
+  <color name="MsgContentTextColor">#000000</color>
+
+  <!--会员中心的余额与红包颜色-->
+  <color name="MemAccountTextColor">#029272</color>
+
+  <!--订单详情选择红色字体Color-->
+  <color name="OrderRedColor">#ff0000</color>
+  <!--订单详情黑色字体Color-->
+  <color name="OrderDefaultColor">#000000</color>
+  <!--出票详情表格背景色Color-->
+  <color name="TicketBackgroundColor">#ffffff</color>
+
+  <!--比分选项白色字-->
+  <color name="BetHpoSourceWhite">#ffffff</color>
+
+  <!--比分选项粉红色字-->
+  <color name="BetHpoSourcePink">#ea5d5d</color>
+
+  <!--比分选项粉绿色字-->
+  <color name="BetHpoSourceGreen">#2bb565</color>
+
+  <!--比分选项粉蓝色字-->
+  <color name="BetHpoSourceBlue">#4995e3</color>
+
+
+  <color name="LiveIcon_pressed">  #c8cbcc</color>
+
+  <color name="LiveIcon">  #d7d7d7</color>
+
+  <color name="MainButtonBg">  #4b4c4f</color>
+  <color name="MainButtonBg_pressed"> #2e2e30</color>
+  <color name="MainIconBg_pressed">#f1f1f1</color>
+  <!--比分直播绿色字-->
+  <color name="LiveGreen">#129201</color>
+  <!--比分直播黄色色字-->
+  <color name="LiveYellow">#e18f01</color>
+
+  <color name="SplashColor">  #c62324</color>
+
+
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/formHeight"
+        android:background="@drawable/formBorder5px"
+        android:layout_marginTop="6dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="44.3dip"
+            android:id="@+id/txtMsgCode"
+            android:hint="短信验证码"
+            style="@style/AutEditBoxStyle"
+            android:background="@drawable/formBorder10pxRect"
+            android:maxLength="6"
+            android:inputType="number" />
+        <Button
+            android:text="获取验证码"
+            android:layout_width="77.7dp"
+            android:layout_height="44.3dip"
+            android:id="@+id/btnGetVarCode"
+            android:textSize="@dimen/font24px"
+            android:textColor="#FFFFFF"
+            android:background="#BCD5D1"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/formHeight"
+        android:background="@drawable/formBorder5px"
+        android:layout_marginTop="6dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="44.3dip"
+            android:hint="短信验证码"
+            style="@style/AutEditBoxStyle"
+            android:background="@drawable/formBorder10pxRect"
+            android:maxLength="6"
+            android:inputType="number" />
+        <TextViewCountDownDemo.ButtonCountDown
+            android:text="获取验证码"
+            android:layout_width="77.7dp"
+            android:layout_height="44.3dip"
+            android:id="@+id/btnSmsCode"
+            android:textSize="@dimen/font24px"
+            android:textColor="#FFFFFF"
+            android:background="#BCD5D1"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1" />
+</LinearLayout>
