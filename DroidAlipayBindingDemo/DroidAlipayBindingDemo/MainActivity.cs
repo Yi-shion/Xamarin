@@ -12,6 +12,9 @@ namespace DroidAlipayBindingDemo
     [Activity(Label = "DroidAlipayBindingDemo", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
+
+        //错误	67	“Com.Alipay.Sdk.Protocol.MiniWindowFrame.A(Org.Json.JSONObject)”: 无法重写，因为“Com.Alipay.Sdk.Protocol.WindowData.A”不是函数	E:\Work\project svn\XamarinDemo\trunk\DroidAlipayBindingDemo\AlipayBinding\obj\Debug\generated\src\Com.Alipay.Sdk.Protocol.MiniWindowFrame.cs	55	31	AlipayBinding
+        //修改父类属性。
         int count = 1;
 
         protected override void OnCreate(Bundle bundle)
