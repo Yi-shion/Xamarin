@@ -1,3 +1,0 @@
-Xamarin.Android-用ZXing实现二维码扫描以及连续扫描
-
-http://www.cnblogs.com/Exception/p/4401141.html
