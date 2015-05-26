@@ -1,3 +1,0 @@
-http://blog.csdn.net/parcool/article/details/41077409
-
-textview垂直跑马灯动画效果
