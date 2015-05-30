@@ -1,0 +1,180 @@
+刚入门的童鞋肯能都会有一个疑问，Java不是有虚拟机了么，内存会自动化管理，我们就不必要手动的释放资源了，反正系统会给我们完成。其实Java中没有指针的概念，但是指针的使用方式依然存在，一味的依赖系统的gc，很容易就造成了内存的浪费。
+Java基于垃圾回收的内存机制
+Java的内存管理机制会自动回收无用对象所占用的内存，减轻手工管理内存的负担
+      1、C/C++: 从申请、使用、释放都需要手工管理
+      2、Java:无用的对象的内存会被自动回收
+
+
+
+什么样的对象是无用的对象
+      1、Java通过引用来操作一个具体的对象，引用类似于C 中的指针。一个对象可以持有其他对象的引用。
+      2、从一组根对象(GC Roots)开始,按对象之前的引用关系遍历所有对象，在遍历过程中标记所有的可达对象。如果一个对象由根对象出发不可达，则将它作为垃圾收集。
+
+GCRoot 都有哪些？
+1、  Class:由系统的类加载器加载的类对象
+2、  Static Fields
+3、  Thread:活着的线程
+4、  Stack Local: java方法的局部变量或参数
+5、  JNI Local: JNI方法中的局部引用
+6、  JNI Global: 全局的JNI引用
+7、  Monitor used: 用于同步的监控对象
+8、Help by VM: 用于JVM特殊目的由GC保留的对象
+
+
+
+Java程序中的内存泄漏
+对象的内存在分配之后无法通过程序的执行逻辑释放对该对象的引用，不能被回收该对象所占内存
+内存泄漏的危害
+1、  引起OutOfMemoryError
+2、  内存占用高时JVM虚拟机会频繁触发GC, 影响程序响应速度
+3、内存占用大的程序容易被各种清理优化程序中止，用户也更倾向于卸载这些程序
+Android应用的开发语言为Java，每个应用最大可使用的堆内存受到Android系统的限制
+Android每一个应用的堆内存大小有限
+      1、  通常的情况为16M-48M
+      2、  通过ActivityManager的getMemoryClass()来查询可用堆内存限制
+      3、3.0(HoneyComb)以上的版本可以通过largeHeap=“true”来申请更多的堆内存
+           Nexus S(4.2.1):normal 192, largeHeap 512
+      4、如果试图申请的内存大于当前余下的堆内存就会引发OutOfMemoryError()
+      5、应用程序由于各方面的限制，需要注意减少内存占用，避免出现内存泄漏。
+用MAT工具来检测内存泄漏
+在试图窗口中新建一个Memory Analysis会出现一个
+
+没有的可以去http://www.eclipse.org/mat/downloads.php安装一下MAT
+在Android 的调试环境DDMS下，找到Heap dump
+
+Dump下当前内存中的镜像文件，*****.hprof
+
+
+能清楚的看到每一个部分暂用的内存大小。
+也可以切换试图，group查看不同包不同类的占用细节。
+
+ 
+Heap dump
+?       包含了触发Heap dump生成的时刻Java进程的内存快照，主要内容为各个Java类和对象在堆内存中的分配情况
+Memory Analyzer Tool (MAT)
+常见内存泄露原因
+Context对象泄漏
+      1、如果一个类持有Context对象的强引用，就需要检查其生存周期是否比Context对象更长。否则就可能发生Context泄漏。
+      2、View持有其创建所在Context对象的引用，如果将View对象传递给其它生存周期比View所在Context更长的强引用，就可能会引起内存泄漏。
+例如View#setTag(int, Object)的内存泄漏https://code.google.com/p/android/issues/detail?id=18273
+      3、把Context对象赋给static变量。
+避免Context对象泄漏Checklist
+      1、检查所有持有对Context对象强引用的对象的生命周期是否超出其所持有的Context对象的生命周期。
+      2、检查有没有把View传出到View所在Context之外的地方，如果有的话就需要检查生命周期。
+      3、工具类中最好不要有Context成员变量，尽量在调用函数时直接通过调用参数传入。如果必须有Context成员变量时，可以考虑使用WeakReference来引用Context对象。
+      4、View持有其创建所在Context对象的引用，如果将View对象传递给其它生存周期比View所在Context更长的强引用，就可能会引起内存泄漏。
+      5、  检查把Context或者View对象赋给static变量的地方，看是否有Context泄漏。
+      6、检查所有把View放入容器类的地方（特别是static容器类），看是否有内存泄漏。7、使用WeakHashMap也需要注意有没有value-key的引用。
+      7、尽量使用ApplicationContext。
+Handler对象泄漏
+1、发送到Handler的Message实际上是加入到了主线程的消息队列等待处理，每一个Message持有其目标Handler的强引用。
+如我们通常使用的匿名内部类Handler
+
+[java] view plaincopyprint?
+
+
+<span style="font-size:18px;">HandlermHandler = new Handler() {  
+    @Override  
+    public voidhandleMessage(Message msg) {  
+       mImageView.setImageBitmap(mBitmap);  
+    }  
+}</span>  
+
+
+
+
+上面是一段简单的Handler的使用。当使用内部类（包括匿名类）来创建Handler的时候，Handler对象会隐式地持有一个外部类对象（通常是一个Activity）的引用，因为View会依附着一个Activity。而Handler通常会伴随着一个耗时的后台线程（例如从网络拉取图片）一起出现，这个后台线程在任务执行完毕（例如图片下载完毕）之后，通过消息机制通知Handler，然后Handler把图片更新到界面。然而，如果用户在网络请求过程中关闭了Activity，正常情况下，Activity不再被使用，它就有可能在GC检查时被回收掉，但由于这时线程尚未执行完，而该线程持有Handler的引用（不然它怎么发消息给Handler？），这个Handler又持有Activity的引用，就导致该Activity无法被回收（即内存泄露），直到网络请求结束（例如图片下载完毕）。另外，如果你执行了Handler的postDelayed()方法，该方法会将你的Handler装入一个Message，并把这条Message推到MessageQueue中，那么在你设定的delay到达之前，会有一条MessageQueue -> Message -> Handler -> Activity的链，导致你的Activity被持有引用而无法被回收。
+当然，应为是Handler对外部持有引用的原因，我们就可以将Activity设置为一个弱引用，在不必要的时候，不再执行内部方法。
+
+[java] view plaincopyprint?
+
+
+<span style="font-size:18px;">/**
+* @author zhoushengtao
+* @since 2013-12-16 下午3:25:36
+*/  
+   
+import android.app.Activity;  
+importandroid.content.Context;  
+importandroid.os.Handler;  
+importandroid.os.Message;  
+   
+importjava.lang.ref.WeakReference;  
+   
+publicclass WeakRefHandler extends Handler  
+{  
+    WeakReference<Context> mWeakContext;  
+   
+    public WeakRefHandler(Context context)  
+    {  
+        mWeakContext = newWeakReference<Context>(context);  
+    }  
+   
+    @Override  
+    public void handleMessage(Message msg)  
+    {  
+        if((mWeakContext.get() instanceofActivity )&& ((Activity)mWeakContext.get()).isFinishing())  
+                return ;  
+        if(mWeakContext==null){  
+            return ;  
+        }  
+        super.handleMessage(msg);  
+    }  
+}</span>  
+
+
+
+
+2、Non-staticinner class 和anonymous class持有其outer class的引用。
+Drawable.Callback引起的内存泄漏
+Drawable对象持有Drawable.callback的引用。当把一个Drawable对象设置到一个View时，Drawable对象会持有该View的引用作为Drawable.Callback
+
+
+避免Drawable.Callback引起内存泄漏
+?       尽量不要在static成员中保存Drawable对象
+?       对于需要保存的Drawable对象， 在需要时调用Drawable#setCallback(null).
+ 
+其他内存泄漏
+      1、Android DigitalClock引起的内存泄漏http://code.google.com/p/android/issues/detail?id=17015
+      2、使用Map容器类时，作为Key 的类没有正确的实现hashCode和equal函数
+
+其他内存泄漏
+?       JNI程序中的内存泄漏
+1、  Malloc/free。
+2、  JNI Global reference
+?       Thread-Local Variable
+1、  相当于Thread对象的成员变量， 可以存储线程相关的状态
+2、  如果thread是alive状态，那么Thread-Local中的对象就无法被GC。
+进程内存占用监测工具
+Dumpsys
+?       $ dumpsys meminfo [pid]
+
+ 
+Procrank + Shell脚本
+?       #procrank
+      1、  VSS - Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）
+      2、  RSS - Resident Set Size 实际使用物理内存（包含共享库占用的内存）
+3、  PSS - Proportional Set Size 实际使用的物理内存（比例分配共享库占用的内存）
+4、  USS - Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）
+
+ 
+Shell脚本
+#!/bin/bash
+while true; do
+         adbshell procrank | grep "com.qihoo360.mobilesafe"
+         sleep1
+done
+当然，部分机型的sh都是经过第三方手机商精简过的，很多命令都用不了。Procrank，就是一个经常被精简掉的命令。
+         鉴于此：
+         自己写了一个小工具，检测内存的实时变化，
+Github地址：https://github.com/stchou/JasonTest
+
+小结
+      1.      保存对象前要三思
+                               I.           对象本身有无隐含的引用
+                             II.           保存后何时能够回收
+      2.      要了解常见的隐含引用
+                               I.           anonymous class outer class
+                             II.           View to context
+      3.      要通过各种工具检查内存占用是否有异常
+      4.      创建大对象时，要检查它的生命周期
